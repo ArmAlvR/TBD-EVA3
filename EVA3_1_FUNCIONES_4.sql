@@ -1,0 +1,3 @@
+CREATE FUNCTION sumer(valor1 INT, valor2 INT)
+RETURNS INT DETERMINISTIC
+RETURN valor1 + valor2;

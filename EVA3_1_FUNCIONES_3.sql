@@ -1,0 +1,3 @@
+CREATE FUNCTION mostrarMensaje(mensaje varchar(50))
+RETURNS VARCHAR(100) DETERMINISTIC
+RETURN CONCAT("Hola ", mensaje);
