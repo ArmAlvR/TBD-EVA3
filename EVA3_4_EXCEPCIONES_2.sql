@@ -1,0 +1,12 @@
+DELIMITER $$
+
+CREATE FUNCTION f_get_año(
+    p_fecha DATE
+)
+RETURNS VARCHAR(2)
+DETERMINISTIC
+BEGIN
+    RETURN DATE_FORMAT(p_fecha, '%y');
+END$$
+
+DELIMITER ;
