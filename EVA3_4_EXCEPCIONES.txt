@@ -1,0 +1,111 @@
+MySQL Shell 8.0.43
+
+Copyright (c) 2016, 2025, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \c root@localhost
+Creating a session to 'root@localhost'
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 13 (X protocol)
+Server version: 8.0.43 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:33060+ ssl  SQL > use tbd3
+Default schema set to `tbd3`.
+Fetching global names, object names from `tbd3` for auto-completion... Press ^C to stop.
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CREATE TABLE Personas(
+                                       ->     RFC VARCHAR(10) NOT NULL KEY,
+                                       ->     Nombre VARCHAR(50) NOT NULL,
+                                       ->     Ap_Paterno VARCHAR(50) NOT NULL,
+                                       ->     Ap_Materno VARCHAR(50),
+                                       ->     Fecha_Nac DATE
+                                       -> );
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 7
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CREATE TABLE Personas(
+                                       ->     RFC VARCHAR(10) NOT NULL KEY,
+                                       ->     Nombre VARCHAR(50) NOT NULL,
+                                       ->     Ap_Paterno VARCHAR(50) NOT NULL,
+                                       ->     Ap_Materno VARCHAR(50),
+                                       ->     Fecha_Nac DATE
+                                       ->
+                                       -> );
+ERROR: 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 8
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CREATE TABLE Personas (
+                                       ->     RFC VARCHAR(13) NOT NULL PRIMARY KEY,
+                                       ->     Nombre VARCHAR(50) NOT NULL,
+                                       ->     Ap_Paterno VARCHAR(50) NOT NULL,
+                                       ->     Ap_Materno VARCHAR(50),
+                                       ->     Fecha_Nac DATE
+                                       -> );
+Query OK, 0 rows affected (0.0240 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Juan', 'Perez', 'Gomez', '1990-05-15');
+ERROR: 1054: Unknown column 'nueva_fecha' in 'field list'
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Luis', 'Ramos', 'Diaz', '1999-03-10');
+ERROR: 1305: FUNCTION tbd3.f_get_año does not exist
+ MySQL  localhost:33060+ ssl  tbd3  SQL > ^C
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Luis', 'Ramos', 'Diaz', '1999-03-10');
+ERROR: 1305: FUNCTION tbd3.f_get_dia does not exist
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Luis', 'Ramos', 'Diaz', '1999-03-10');
+Query OK, 1 row affected (0.0428 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > select * from personas;
++------------+--------+------------+------------+------------+
+| RFC        | Nombre | Ap_Paterno | Ap_Materno | Fecha_Nac  |
++------------+--------+------------+------------+------------+
+| RADL990310 | Luis   | Ramos      | Diaz       | 1999-03-10 |
++------------+--------+------------+------------+------------+
+1 row in set (0.0010 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Juan', 'Perez', 'Garcia', '1990-05-15');
+Query OK, 1 row affected (0.0389 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Maria', 'Lopez', 'Cruz', '2001-11-20');
+Query OK, 1 row affected (0.0381 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Carlos', 'Martinez', 'Hernandez', '1985-01-30');
+Query OK, 1 row affected (0.0374 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > select * from personas;
++------------+--------+------------+------------+------------+
+| RFC        | Nombre | Ap_Paterno | Ap_Materno | Fecha_Nac  |
++------------+--------+------------+------------+------------+
+| LOCM011120 | Maria  | Lopez      | Cruz       | 2001-11-20 |
+| MAHC850130 | Carlos | Martinez   | Hernandez  | 1985-01-30 |
+| PEGJ900515 | Juan   | Perez      | Garcia     | 1990-05-15 |
+| RADL990310 | Luis   | Ramos      | Diaz       | 1999-03-10 |
++------------+--------+------------+------------+------------+
+4 rows in set (0.0013 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Jose Armando', 'Alvidrez', 'Renteria', '1985-01-30');
+Query OK, 1 row affected (0.0386 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > select * from personas;
++------------+--------------+------------+------------+------------+
+| RFC        | Nombre       | Ap_Paterno | Ap_Materno | Fecha_Nac  |
++------------+--------------+------------+------------+------------+
+| ALRJ850130 | Jose Armando | Alvidrez   | Renteria   | 1985-01-30 |
+| LOCM011120 | Maria        | Lopez      | Cruz       | 2001-11-20 |
+| MAHC850130 | Carlos       | Martinez   | Hernandez  | 1985-01-30 |
+| PEGJ900515 | Juan         | Perez      | Garcia     | 1990-05-15 |
+| RADL990310 | Luis         | Ramos      | Diaz       | 1999-03-10 |
++------------+--------------+------------+------------+------------+
+5 rows in set (0.0009 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > select agregar_Personas('Valentina', 'Alvidrez', 'Rios');
+ERROR: 1305: FUNCTION tbd3.agregar_Personas does not exist
+ MySQL  localhost:33060+ ssl  tbd3  SQL > select agregar_Personas('Valentina', 'Alvidrez', 'Rios');
+ERROR: 1305: FUNCTION tbd3.agregar_Personas does not exist
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Valentina', 'Alvidrez', 'Rios');
+ERROR: 1318: Incorrect number of arguments for PROCEDURE tbd3.agregar_Personas; expected 4, got 3
+ MySQL  localhost:33060+ ssl  tbd3  SQL > select agregar_Personas('Valentina', 'Alvidrez', 'Rios', '2002-12-05');
+ERROR: 1305: FUNCTION tbd3.agregar_Personas does not exist
+ MySQL  localhost:33060+ ssl  tbd3  SQL > CALL agregar_Personas('Valentina', 'Alvidrez', 'Rios', '2002-12-05');
+Query OK, 1 row affected (0.0375 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL > select * from personas;
++------------+--------------+------------+------------+------------+
+| RFC        | Nombre       | Ap_Paterno | Ap_Materno | Fecha_Nac  |
++------------+--------------+------------+------------+------------+
+| ALRJ850130 | Jose Armando | Alvidrez   | Renteria   | 1985-01-30 |
+| ALRV021205 | Valentina    | Alvidrez   | Rios       | 2002-12-05 |
+| LOCM011120 | Maria        | Lopez      | Cruz       | 2001-11-20 |
+| MAHC850130 | Carlos       | Martinez   | Hernandez  | 1985-01-30 |
+| PEGJ900515 | Juan         | Perez      | Garcia     | 1990-05-15 |
+| RADL990310 | Luis         | Ramos      | Diaz       | 1999-03-10 |
++------------+--------------+------------+------------+------------+
+6 rows in set (0.0009 sec)
+ MySQL  localhost:33060+ ssl  tbd3  SQL >
