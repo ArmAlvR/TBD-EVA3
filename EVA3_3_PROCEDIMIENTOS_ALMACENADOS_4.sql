@@ -1,0 +1,6 @@
+DELIMITER $$
+CREATE PROCEDURE mostrar_actores()
+BEGIN
+	SELECT * FROM actor;
+END$$
+DELIMITER ;

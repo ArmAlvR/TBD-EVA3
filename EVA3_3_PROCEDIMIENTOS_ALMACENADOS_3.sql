@@ -1,0 +1,9 @@
+DELIMITER $$
+CREATE FUNCTION maximo_actores()
+RETURNS INT READS SQL DATA
+BEGIN
+    DECLARE maxi INT DEFAULT 0;
+	SELECT max(actor_id) INTO maxi FROM actor;
+    RETURN maxi;
+END$$
+DELIMITER ;

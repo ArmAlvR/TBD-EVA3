@@ -1,0 +1,9 @@
+DELIMITER $$
+CREATE FUNCTION minimo_actores()
+RETURNS INT READS SQL DATA
+BEGIN
+    DECLARE mini INT DEFAULT 0;
+	SELECT min(actor_id) INTO mini FROM actor;
+    RETURN mini;
+END$$
+DELIMITER ;
